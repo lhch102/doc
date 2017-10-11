@@ -1,0 +1,82 @@
+﻿body {
+  margin:0px;
+  background-image:none;
+  position:static;
+  left:auto;
+  width:520px;
+  margin-left:0;
+  margin-right:0;
+  text-align:left;
+}
+#base {
+  position:absolute;
+  z-index:0;
+}
+#u0_div {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:369px;
+  height:49px;
+  background:inherit;
+  background-color:rgba(255, 255, 255, 0);
+  border:none;
+  border-radius:0px;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  font-size:18px;
+  color:#666666;
+}
+#u0 {
+  position:absolute;
+  left:151px;
+  top:190px;
+  width:369px;
+  height:49px;
+  font-size:18px;
+  color:#666666;
+}
+#u1 {
+  position:absolute;
+  left:2px;
+  top:12px;
+  width:365px;
+  word-wrap:break-word;
+}
+#u2_div {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:197px;
+  height:66px;
+  background:inherit;
+  background-color:rgba(22, 155, 213, 1);
+  border:none;
+  border-radius:5px;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  font-family:'.AppleSystemUIFontBold', '.AppleSystemUIFont Bold', '.AppleSystemUIFont';
+  font-weight:700;
+  font-style:normal;
+  font-size:20px;
+}
+#u2 {
+  position:absolute;
+  left:222px;
+  top:264px;
+  width:197px;
+  height:66px;
+  font-family:'.AppleSystemUIFontBold', '.AppleSystemUIFont Bold', '.AppleSystemUIFont';
+  font-weight:700;
+  font-style:normal;
+  font-size:20px;
+}
+#u3 {
+  position:absolute;
+  left:2px;
+  top:22px;
+  width:193px;
+  word-wrap:break-word;
+}
