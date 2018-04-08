@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.account.dao.AccountUserDeptMapper" >
+  <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountUserDeptKey" >
+    <id column="user_no" property="userNo" jdbcType="VARCHAR" />
+    <id column="dept_no" property="deptNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountUserDeptKey" >
+    delete from account_user_dept
+    where user_no = #{userNo,jdbcType=VARCHAR}
+      and dept_no = #{deptNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountUserDeptKey" >
+    insert into account_user_dept (user_no, dept_no)
+    values (#{userNo,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountUserDeptKey" >
+    insert into account_user_dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userNo != null" >
+        user_no,
+      </if>
+      <if test="deptNo != null" >
+        dept_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userNo != null" >
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        #{deptNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
