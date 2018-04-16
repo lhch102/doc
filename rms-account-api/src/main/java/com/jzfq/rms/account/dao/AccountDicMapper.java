@@ -51,6 +51,15 @@ public interface AccountDicMapper {
 
     int isUsing(@Param("type") String type, @Param("list") List<String> list);
 
+    /**
+     * 更新字典键值
+     *
+     * @param record
+     * @return
+     */
+
+    int updateByObject(AccountDic record);
+
 
 
 

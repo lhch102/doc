@@ -112,7 +112,7 @@ public class GenerateObjectNoService {
                     int noPlus = Integer.parseInt(No_.substring(length - 3, length));
                     No_ = letter + String.format("%03d", noPlus + 1);
                 }else {
-                    No_ = str + Plus(3);
+                    No_ = str + plus(3);
                 }
                 return No_;
         }
@@ -122,7 +122,7 @@ public class GenerateObjectNoService {
             int noPlus = Integer.parseInt(No_.substring(length - 6, length));
             No_ = letter + String.format("%06d", noPlus + 1);
         } else {
-            No_ = str + Plus(6);
+            No_ = str + plus(6);
         }
         return No_;
     }
@@ -134,7 +134,7 @@ public class GenerateObjectNoService {
      *
      * @return
      */
-    public static String Plus(int numLength) {
+    public static String plus(int numLength) {
         i++;
         String num = null;
         switch (numLength){

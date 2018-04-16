@@ -29,7 +29,7 @@ public class AccountMenuJunitTest {
 		AccountMenu accountMenu001=new AccountMenu();
 		AccountMenu accountMenu0001=new AccountMenu();
 
-		accountMenu01.setMenuName("a01");
+		accountMenu01.setMenuName("系统管理");
 		accountMenu01.setMenuNo("01");
 
 		accountMenu001.setMenuName("a001");

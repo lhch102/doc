@@ -18,9 +18,10 @@
 	<!--</bean>-->
 	<!-- 引入属性文件 -->
 	<context:property-placeholder ignore-resource-not-found="true" ignore-unresolvable="false"
-								  location="classpath:prod.properties,file:/data/config/rms-product/prod.properties" />
+								  location="classpath:prod.properties,file:/data/config/rms-account-api/prod.properties" />
 	<import resource="classpath:spring/applicationContext-servlet.xml"/>
 	<import resource="classpath:spring/applicationContext-redis.xml"/>
 	<import resource="classpath:spring/applicationContext-mysql.xml"/>
 	<import resource="classpath:spring/applicationContext-template.xml"/>
+
 </beans>

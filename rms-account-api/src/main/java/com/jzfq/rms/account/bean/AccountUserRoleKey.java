@@ -1,8 +1,12 @@
 package com.jzfq.rms.account.bean;
 
-public class AccountUserRoleKey {
-    private String userNo;
+import org.hibernate.validator.constraints.NotBlank;
 
+public class AccountUserRoleKey {
+
+    @NotBlank(message = "用户编号不能为空！")
+    private String userNo;
+    @NotBlank(message = "角色编号不能为空！")
     private String roleNo;
 
     public String getUserNo() {

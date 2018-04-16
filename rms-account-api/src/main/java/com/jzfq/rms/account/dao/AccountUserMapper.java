@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface AccountUserMapper {
@@ -36,4 +37,13 @@ public interface AccountUserMapper {
     String getMaxUserNo();
 
     public AccountUser queryByUserNameAndPassword(HashMap<String, Object> userMap);
+
+    public AccountUser queryByLoginName(HashMap<String, Object> map);
+
+    /**
+     * 校验登录账户是否重复
+     * @param params
+     * @return
+     */
+    int checkLoginName(Map<String, Object> params);
 }

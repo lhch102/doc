@@ -1,10 +1,14 @@
 package com.jzfq.rms.account.bean.Extended;
 
+import com.jzfq.rms.account.bean.AccountDept;
 import com.jzfq.rms.account.bean.AccountDic;
+import com.jzfq.rms.account.bean.AccountRole;
 import com.jzfq.rms.account.bean.BaseBean;
 import com.jzfq.rms.account.common.Page;
+import com.jzfq.rms.account.common.PageData;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户表实体扩展类
@@ -29,10 +33,16 @@ public class AccountUserExtended extends Page{
      * 机构类型名称
      */
     private String typeName;
+
     /**
-     * 序号
+     * 所属机构列表
      */
-    private int No_;
+    List<Map<String,Object>> belongsToDeptList;
+
+    /**
+     * 所属角色列表
+     */
+    PageData<AccountRole> belongsToRoleList;
 
     public String getPositionTypeName() {
         return positionTypeName;
@@ -66,11 +76,19 @@ public class AccountUserExtended extends Page{
         this.typeName = typeName;
     }
 
-    public int getNo_() {
-        return No_;
+    public List<Map<String, Object>> getBelongsToDeptList() {
+        return belongsToDeptList;
     }
 
-    public void setNo_(int no_) {
-        No_ = no_;
+    public void setBelongsToDeptList(List<Map<String, Object>> belongsToDeptList) {
+        this.belongsToDeptList = belongsToDeptList;
+    }
+
+    public PageData<AccountRole> getBelongsToRoleList() {
+        return belongsToRoleList;
+    }
+
+    public void setBelongsToRoleList(PageData<AccountRole> belongsToRoleList) {
+        this.belongsToRoleList = belongsToRoleList;
     }
 }

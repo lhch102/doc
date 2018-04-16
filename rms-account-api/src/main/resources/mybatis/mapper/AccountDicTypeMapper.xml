@@ -7,11 +7,11 @@
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="upate_date" property="upateDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="enable_flag" property="enableFlag" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type_name, type, remark, update_by, upate_date, enable_flag
+    id, type_name, type, remark, update_by, update_date, enable_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
     insert into account_dic_type (id, type_name, type, 
-      remark, update_by, upate_date, 
+      remark, update_by, update_date,
       enable_flag)
     values (#{id,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{upateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
       #{enableFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
@@ -50,7 +50,7 @@
         update_by,
       </if>
       <if test="upateDate != null" >
-        upate_date,
+        update_date,
       </if>
       <if test="enableFlag != null" >
         enable_flag,
@@ -72,8 +72,8 @@
       <if test="updateBy != null" >
         #{updateBy,jdbcType=VARCHAR},
       </if>
-      <if test="upateDate != null" >
-        #{upateDate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="enableFlag != null" >
         #{enableFlag,jdbcType=CHAR},
@@ -95,8 +95,8 @@
       <if test="updateBy != null" >
         update_by = #{updateBy,jdbcType=VARCHAR},
       </if>
-      <if test="upateDate != null" >
-        upate_date = #{upateDate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="enableFlag != null" >
         enable_flag = #{enableFlag,jdbcType=CHAR},
@@ -110,7 +110,7 @@
       type = #{type,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       update_by = #{updateBy,jdbcType=VARCHAR},
-      upate_date = #{upateDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
       enable_flag = #{enableFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -123,13 +123,13 @@
 
     <if test="p!=null">
       <where>
-        <if test="p.typeName != null">
+        <if test="p.typeName != null and p.typeName != ''">
           and dic.type_name like '%${p.typeName}%'
         </if>
-        <if test="p.type != null">
-          and dic.type = ${p.type}
+        <if test="p.type != null and p.type != ''">
+          and dic.type = '${p.type}'
         </if>
-        <if test="p.remark != null">
+        <if test="p.remark != null and p.remark != ''">
           and dic.remark like '%${p.remark}%'
 
         </if>
@@ -145,7 +145,7 @@
     where type_name = #{typeName,jdbcType=VARCHAR}
     <if test="id != null and id != ''">
       and dic.type_name not in (
-      select type_name from account_dic_type c where c.id = #{id,jdbcType=VARCHAR}
+      select IFNULL(type_name,'') from account_dic_type c where c.id = #{id,jdbcType=VARCHAR}
       )
     </if>
   </select>

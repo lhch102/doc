@@ -1,6 +1,8 @@
 package com.jzfq.rms.account.bean;
 
-public class AccountOperate {
+import com.jzfq.rms.account.web.requestModel.BaseRequestModel;
+
+public class AccountOperate extends BaseRequestModel{
     private Long id;
 
     private String operateValue;
@@ -10,6 +12,16 @@ public class AccountOperate {
     private String operateRemark;
 
     private String operateType;
+
+    private String enable;
+
+    public String getEnable() {
+        return enable;
+    }
+
+    public void setEnable(String enable) {
+        this.enable = enable;
+    }
 
     public Long getId() {
         return id;

@@ -20,16 +20,17 @@ public class ValidationUtils {
 	 * @return
 	 */
 	public static List<String> emptyValidate(Map<String, Object> params, String[] notEmptyArgs) {
-		List<String> illegalArgs = new ArrayList<String>(notEmptyArgs.length);
 		if (notEmptyArgs != null) {
+			List<String> illegalArgs = new ArrayList<String>(notEmptyArgs.length);
 			for (String arg : notEmptyArgs) {
 				Object paraValue = params.get(arg);
 				if (paraValue == null || paraValue.equals("")) {
 					illegalArgs.add(arg);
 				}
 			}
+			return illegalArgs;
 		}
-		return illegalArgs;
+		return null;
 	}
 
 	/**
@@ -39,16 +40,17 @@ public class ValidationUtils {
 	 * @return
 	 */
 	public static List<String> numericValidate(Map<String, Object> params, String[] numbericArgs) {
-		List<String> illegalArgs = new ArrayList<String>(numbericArgs.length);
 		if (numbericArgs != null) {
+			List<String> illegalArgs = new ArrayList<String>(numbericArgs.length);
 			for (String arg : numbericArgs) {
 				Object paraValue = params.get(arg);
 				if (paraValue != null && !StringUtils.isNumeric(paraValue.toString())) {
 					illegalArgs.add(arg);
 				}
 			}
+			return illegalArgs;
 		}
-		return illegalArgs;
+		return null;
 	}
 
 }

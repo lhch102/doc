@@ -2,6 +2,7 @@ package com.jzfq.rms.account.service.impl;
 
 import com.jzfq.rms.account.bean.AccountSystem;
 import com.jzfq.rms.account.dao.AccountSystemMapper;
+import com.jzfq.rms.account.exception.BusinessException;
 import com.jzfq.rms.account.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,25 @@ public class SystemServiceImpl implements SystemService {
 
     @Autowired
     private AccountSystemMapper systemMapper;
+
     /**
      * 获取所属系统
      *
      * @return
      */
     @Override
-    public List<Map<String,String>> getSystemList() {
+    public List<Map<String, String>> getSystemList() {
         return systemMapper.getSystemList();
+    }
+
+    @Override
+    public List<AccountSystem> selectAll() throws BusinessException {
+        return systemMapper.selectAll();
+    }
+
+
+    @Override
+    public AccountSystem selectByPrimaryKey(String systemNo) {
+        return systemMapper.selectByPrimaryKey(systemNo);
     }
 }

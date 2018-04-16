@@ -1,15 +1,15 @@
 package com.jzfq.rms.account.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.jzfq.rms.account.common.Page;
 import com.jzfq.rms.account.web.requestModel.BaseRequestModel;
 
 import java.util.Date;
 
 public class AccountDic extends BaseRequestModel{
+    private Long id;
 
-    private String id;
-
-    private String value;
+    private String dicValue;
 
     private String label;
 
@@ -21,30 +21,32 @@ public class AccountDic extends BaseRequestModel{
 
     private String createBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     private String updateBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
-    private String remarks;
+    private String remark;
 
     private String delFlag;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getDicValue() {
+        return dicValue;
     }
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
+    public void setDicValue(String dicValue) {
+        this.dicValue = dicValue;
     }
 
     public String getLabel() {
@@ -111,12 +113,12 @@ public class AccountDic extends BaseRequestModel{
         this.updateDate = updateDate;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks == null ? null : remarks.trim();
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getDelFlag() {

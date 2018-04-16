@@ -1,9 +1,18 @@
 package com.jzfq.rms.account.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.jzfq.rms.account.bean.Extended.AccountMenuExtended;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AccountMenu {
+/**
+ * 菜单实体
+ * @author 大连桔子分期科技有限公司
+ * @date 2018/4/8 11:17
+ */
+public class AccountMenu extends AccountMenuExtended {
     private String menuNo;
 
     private String parentNo;
@@ -26,10 +35,12 @@ public class AccountMenu {
 
     private String createBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     private String updateBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
     private String remarks;
@@ -37,6 +48,18 @@ public class AccountMenu {
     private String delFlag;
 
     private String systemNo;
+
+    private List<AccountMenu> childrens = new ArrayList<AccountMenu>();
+
+    private List<AccountOperate> menuOperateList = new ArrayList<AccountOperate>(); //菜单操作权限
+
+    public List<AccountOperate> getMenuOperateList() {
+        return menuOperateList;
+    }
+
+    public void setMenuOperateList(List<AccountOperate> menuOperateList) {
+        this.menuOperateList = menuOperateList;
+    }
 
     public List<AccountMenu> getChildrenList() {
         return childrenList;
@@ -182,5 +205,13 @@ public class AccountMenu {
 
     public void setSystemNo(String systemNo) {
         this.systemNo = systemNo == null ? null : systemNo.trim();
+    }
+
+    public List<AccountMenu> getChildrens() {
+        return childrens;
+    }
+
+    public void setChildrens(List<AccountMenu> childrens) {
+        this.childrens = childrens;
     }
 }

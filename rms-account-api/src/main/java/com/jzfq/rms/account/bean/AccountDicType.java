@@ -1,5 +1,6 @@
 package com.jzfq.rms.account.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.jzfq.rms.account.web.requestModel.BaseRequestModel;
 
 import java.util.Date;
@@ -15,9 +16,9 @@ public class AccountDicType extends BaseRequestModel {
 
     private String updateBy;
 
-    private Date upateDate;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date updateDate;
 
-    private String updateDateStr;
 
     private String enableFlag;
 
@@ -61,12 +62,13 @@ public class AccountDicType extends BaseRequestModel {
         this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 
-    public Date getUpateDate() {
-        return upateDate;
+
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpateDate(Date upateDate) {
-        this.upateDate = upateDate;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getEnableFlag() {
@@ -77,11 +79,4 @@ public class AccountDicType extends BaseRequestModel {
         this.enableFlag = enableFlag == null ? null : enableFlag.trim();
     }
 
-    public String getUpdateDateStr() {
-        return updateDateStr;
-    }
-
-    public void setUpdateDateStr(String updateDateStr) {
-        this.updateDateStr = updateDateStr;
-    }
 }

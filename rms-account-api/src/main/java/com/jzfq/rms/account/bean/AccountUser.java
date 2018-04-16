@@ -2,6 +2,7 @@ package com.jzfq.rms.account.bean;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.jzfq.rms.account.bean.Extended.AccountUserExtended;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -15,18 +16,22 @@ public class AccountUser extends AccountUserExtended {
     /**
      * 用户业务编号
      */
+    @NotBlank(message = "用户编号不能为空！")
     private String userNo;
     /**
      * 登录名
      */
+    @NotBlank(message = "登录名不能为空！")
     private String loginName;
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空！")
     private String password;
     /**
      * 真实姓名
      */
+    @NotBlank(message = "真实姓名不能为空！")
     private String name;
     /**
      * 邮箱
@@ -35,10 +40,12 @@ public class AccountUser extends AccountUserExtended {
     /**
      * 手机
      */
+    @NotBlank(message = "手机号不能为空！")
     private String mobile;
     /**
      * 用户类型,1=超级管理员，0=普通用户
      */
+    @NotBlank(message = "用户类型不能为空！")
     private String userType;
     /**
      * 创建者
@@ -70,6 +77,7 @@ public class AccountUser extends AccountUserExtended {
     /**
      * 职位类型,字典表
      */
+    @NotBlank(message = "职位类型不能为空！")
     private String positionType;
     /**
      * 用户头像
@@ -86,6 +94,7 @@ public class AccountUser extends AccountUserExtended {
     /**
      * 启用标识，0=启用，1=停用
      */
+    @NotBlank(message = "状态不能为空！")
     private String enableFlag;
     /**
      * 删除标识；0：未删除；1：已删除；

@@ -37,7 +37,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- 配置请求过滤器 -->
+    <!-- 配置请求过滤器-->
     <filter>
         <filter-name>requestFilter</filter-name>
         <filter-class>com.jzfq.rms.account.web.filter.RequestFilter</filter-class>
@@ -55,7 +55,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ValidateCodeServlet</servlet-name>
-        <url-pattern>/servlet/validateCodeServlet</url-pattern>
+        <url-pattern>/userlogin/getValidateCode.json</url-pattern>
     </servlet-mapping>
 
     <!-- 配置spring容器 -->
@@ -68,6 +68,31 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>com.jzfq.rms.account.web.filter.CorsFilter</filter-class>
+        <init-param>
+            <param-name>allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowMethods</param-name>
+            <param-value>GET,POST,PUT,DELETE,OPTIONS</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowCredentials</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowHeaders</param-name>
+            <param-value>Content-Type</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>

@@ -1,8 +1,13 @@
 package com.jzfq.rms.account.bean;
 
-import java.util.Date;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.jzfq.rms.account.bean.Extended.AccountDeptExtended;
 
-public class AccountDept extends BaseBean{
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class AccountDept extends AccountDeptExtended{
     private String deptNo;
 
     private String parentNo;
@@ -21,12 +26,17 @@ public class AccountDept extends BaseBean{
 
     private String createBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
     private String updateBy;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
+    /**
+     * 机构等级
+     */
     private String grade;
 
     private String remarks;
@@ -34,6 +44,8 @@ public class AccountDept extends BaseBean{
     private String enableFlag;
 
     private String delFlag;
+
+    private List<AccountDept> childrens = new ArrayList<AccountDept>();
 
     public String getDeptNo() {
         return deptNo;
@@ -161,5 +173,13 @@ public class AccountDept extends BaseBean{
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag == null ? null : delFlag.trim();
+    }
+
+    public List<AccountDept> getChildrens() {
+        return childrens;
+    }
+
+    public void setChildrens(List<AccountDept> childrens) {
+        this.childrens = childrens;
     }
 }

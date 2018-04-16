@@ -3,6 +3,7 @@ package com.jzfq.rms.account.utils;
 
 import com.jzfq.rms.account.constant.DateConstants;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -112,7 +113,7 @@ public abstract class DateUtils {
         return calendar.getTime();
     }
 
-    public static Date HourAfter(Date time, int count) {
+    public static Date hourAfter(Date time, int count) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time.getTime());
 
@@ -151,7 +152,22 @@ public abstract class DateUtils {
         res = String.valueOf(ts);
         return res;
     }
+
+    /*
+     * 校验时间格式
+     */
+    public final static Timestamp stringToTsDate(String time) {
+        SimpleDateFormat sf = new SimpleDateFormat(DateUtils.DATE_FORMAT_LONG);
+        Timestamp ts = null;
+        try {
+            ts = new Timestamp(sf.parse(time).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ts;
+    }
+
     public static void main(String[] args) {
-        System.out.println(date2str(DateUtils.HourAfter(now(),1),DateConstants.REMINDER_YMDTIME_FORMAT));
+        System.out.println(date2str(DateUtils.hourAfter(now(),1),DateConstants.REMINDER_YMDTIME_FORMAT));
     }
 }

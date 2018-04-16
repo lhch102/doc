@@ -3,6 +3,7 @@ package com.jzfq.rms.account.service;
 import com.jzfq.rms.account.bean.AccountDic;
 import com.jzfq.rms.account.bean.AccountDicType;
 import com.jzfq.rms.account.common.PageData;
+import com.jzfq.rms.account.web.requestModel.DictionaryRequestModel;
 
 import java.util.List;
 
@@ -40,7 +41,20 @@ public interface DictionaryTypeService {
 
     AccountDicType queryModel(String id);
 
+    /**
+     * 保存字典信息
+     * @param dictionaryRequestModel
+     * @return
+     */
 
+    int save(DictionaryRequestModel dictionaryRequestModel);
 
+    /**
+     * 修改字典信息
+     * @param dictionaryRequestModel
+     * @return
+     */
+
+    int update(DictionaryRequestModel dictionaryRequestModel);
 
 }

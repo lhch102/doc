@@ -39,8 +39,8 @@ public class MD5Util {
 
     public static void main(String[] args) {
 
-        String encry=MD5Util.MD5("admin");
-        encry= MD5Util.MD5(encry+"aaa");
+        String encry = MD5Util.MD5("111111"+SaltUtil.saltStr);
+        // encry= MD5Util.MD5(encry+"aaa");
         System.out.println(encry);
     }
 }

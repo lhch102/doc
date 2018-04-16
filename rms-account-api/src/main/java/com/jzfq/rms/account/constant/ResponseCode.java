@@ -15,6 +15,10 @@ public class ResponseCode {
      * 字典名称已经存在返回码
      */
     public final static int REQUEST_EXIST_DICNAME = -300;
+    /**
+     * 菜单校验失败返回码
+     */
+    public final static int REQUEST_EXIST_MENU = -400;
 
     /**
      * 拒绝IP响应码

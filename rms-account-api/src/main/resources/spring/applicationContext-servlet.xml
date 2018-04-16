@@ -49,7 +49,7 @@
     <!-- 拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/inner/**"/>
+            <mvc:mapping path="/*/**"/>
             <bean class="com.jzfq.rms.account.web.interceptor.IPValidInterceptor">
                 <property name="openIPCheck" value="${openIPCheck}"/>
                 <property name="accessIP" value="${accessIP}"/>
@@ -60,7 +60,7 @@
 
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/accountLogin/**"/>
+            <mvc:exclude-mapping path="/account/login.*"/>
             <bean class="com.jzfq.rms.account.web.interceptor.UserTokenInterceptor">
             </bean>
         </mvc:interceptor>

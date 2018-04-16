@@ -16,7 +16,7 @@
         <spring-data-redis.version>1.7.4.RELEASE</spring-data-redis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <mybatis.version>3.4.1</mybatis.version>
-        <mysql.version>5.0.4</mysql.version>
+        <mysql.version>5.1.29</mysql.version>
         <jedis.version>2.9.0</jedis.version>
         <servlet.version>3.1.0</servlet.version>
         <fastjson.version>1.1.43</fastjson.version>
@@ -26,6 +26,7 @@
         <druid.version>1.0.26</druid.version>
         <junit.version>4.12</junit.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <validator.version>5.2.4.Final</validator.version>
     </properties>
 
     <dependencies>
@@ -180,6 +181,17 @@
             <version>1.1.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.geronimo.bundles</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.8_2</version>
+        </dependency>
+        <!-- bean validate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${validator.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -206,5 +218,31 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://git.juzifenqi.cn:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://git.juzifenqi.cn:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Public Repositories</name>
+            <url>http://git.juzifenqi.cn:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
 
 </project>

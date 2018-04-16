@@ -30,6 +30,8 @@ public class ConnectionFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(0);
+        }catch (RuntimeException e1){
+            
         }
 
         Properties properties = new Properties();

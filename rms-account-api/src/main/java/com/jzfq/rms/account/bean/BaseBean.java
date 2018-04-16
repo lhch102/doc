@@ -5,6 +5,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 使用apache.commons.lang3.builder重写了三个方法
  * @author 大连桔子分期科技有限公司
@@ -29,5 +32,6 @@ public class BaseBean {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
 
 }

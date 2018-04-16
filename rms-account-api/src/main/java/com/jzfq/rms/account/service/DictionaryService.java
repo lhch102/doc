@@ -2,6 +2,8 @@ package com.jzfq.rms.account.service;
 
 import com.jzfq.rms.account.bean.AccountDic;
 import com.jzfq.rms.account.common.PageData;
+import com.jzfq.rms.account.exception.BusinessException;
+import com.jzfq.rms.account.web.requestModel.AccountDicRequestModel;
 
 import java.util.List;
 
@@ -18,14 +20,14 @@ public interface DictionaryService {
      * @return
      */
 
-    PageData<AccountDic> list(AccountDic dic);
+    PageData<AccountDic> list(AccountDic dic)throws BusinessException;
 
     /**
      * 根据字典类型查询字典数据
      * @param type
      * @return
      */
-    List<AccountDic> queryDicListByType(String type);
+    List<AccountDic> queryDicListByType(String type)throws BusinessException;
 
     /**
      * 启用/停用
@@ -33,7 +35,31 @@ public interface DictionaryService {
      * @return
      */
 
-    int isUsing(String type,String dicid);
+    int isUsing(String type,List<String> dicid)throws BusinessException;
+
+    /**
+     * 保存字典数据
+     * @param dicList,type
+     * @return
+     */
+
+    int save(List<AccountDicRequestModel> dicList, String type);
+
+    /**
+     * 修改字典数据
+     * @param dic
+     * @return
+     */
+
+    int update(AccountDicRequestModel dic);
+
+    /**
+     * 根据字典id查询字典数据
+     * @param id
+     * @return
+     */
+
+    AccountDic queryDicKeyById(String id);
 
 
 

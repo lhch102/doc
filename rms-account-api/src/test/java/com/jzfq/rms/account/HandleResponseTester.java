@@ -47,7 +47,7 @@ public class HandleResponseTester {
      * 生成各种编号测试方法
      */
     @Test
-    public void GenerateObjectNo(){
+    public void generateObjectNo(){
         System.out.println(generateObjectNoService.generateSystemNo());
     }
 }

@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jzfq.rms.account.dao.AccountSystemMapper" >
-  <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountSystem" >
-    <id column="system_no" property="systemNo" jdbcType="VARCHAR" />
-    <result column="system_name" property="systemName" jdbcType="VARCHAR" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
-    <result column="contact_telephone" property="contactTelephone" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="system_powerurl" property="systemPowerurl" jdbcType="VARCHAR" />
-    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
-  </resultMap>
+<mapper namespace="com.jzfq.rms.account.dao.AccountSystemMapper">
+    <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountSystem">
+        <id column="system_no" property="systemNo" jdbcType="VARCHAR"/>
+        <result column="system_name" property="systemName" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR"/>
+        <result column="contact_telephone" property="contactTelephone" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="system_powerurl" property="systemPowerurl" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     system_no, system_name, url, emergency_contact, contact_telephone, create_date, create_by, 
     update_date, update_by, system_powerurl, del_flag
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from account_system
-    where system_no = #{systemNo,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from account_system
+        where system_no = #{systemNo,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from account_system
     where system_no = #{systemNo,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountSystem" >
+    <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountSystem">
     insert into account_system (system_no, system_name, url, 
       emergency_contact, contact_telephone, create_date, 
       create_by, update_date, update_by, 
@@ -39,116 +40,116 @@
       #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{systemPowerurl,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountSystem" >
-    insert into account_system
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="systemNo != null" >
-        system_no,
-      </if>
-      <if test="systemName != null" >
-        system_name,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="emergencyContact != null" >
-        emergency_contact,
-      </if>
-      <if test="contactTelephone != null" >
-        contact_telephone,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="systemPowerurl != null" >
-        system_powerurl,
-      </if>
-      <if test="delFlag != null" >
-        del_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="systemNo != null" >
-        #{systemNo,jdbcType=VARCHAR},
-      </if>
-      <if test="systemName != null" >
-        #{systemName,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="emergencyContact != null" >
-        #{emergencyContact,jdbcType=VARCHAR},
-      </if>
-      <if test="contactTelephone != null" >
-        #{contactTelephone,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="systemPowerurl != null" >
-        #{systemPowerurl,jdbcType=VARCHAR},
-      </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.account.bean.AccountSystem" >
-    update account_system
-    <set >
-      <if test="systemName != null" >
-        system_name = #{systemName,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="emergencyContact != null" >
-        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
-      </if>
-      <if test="contactTelephone != null" >
-        contact_telephone = #{contactTelephone,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="systemPowerurl != null" >
-        system_powerurl = #{systemPowerurl,jdbcType=VARCHAR},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=CHAR},
-      </if>
-    </set>
-    where system_no = #{systemNo,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountSystem" >
+    <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountSystem">
+        insert into account_system
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemNo != null">
+                system_no,
+            </if>
+            <if test="systemName != null">
+                system_name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="emergencyContact != null">
+                emergency_contact,
+            </if>
+            <if test="contactTelephone != null">
+                contact_telephone,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="systemPowerurl != null">
+                system_powerurl,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemNo != null">
+                #{systemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="systemName != null">
+                #{systemName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="emergencyContact != null">
+                #{emergencyContact,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTelephone != null">
+                #{contactTelephone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="systemPowerurl != null">
+                #{systemPowerurl,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.account.bean.AccountSystem">
+        update account_system
+        <set>
+            <if test="systemName != null">
+                system_name = #{systemName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="emergencyContact != null">
+                emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTelephone != null">
+                contact_telephone = #{contactTelephone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="systemPowerurl != null">
+                system_powerurl = #{systemPowerurl,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where system_no = #{systemNo,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountSystem">
     update account_system
     set system_name = #{systemName,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
@@ -163,12 +164,22 @@
     where system_no = #{systemNo,jdbcType=VARCHAR}
   </update>
 
-  <!--获取最大用户编号-->
-  <select id="getMaxSystemNo" resultType="string">
+    <!--获取最大用户编号-->
+    <select id="getMaxSystemNo" resultType="string">
     select max(system_no) from account_system where del_flag = 0
   </select>
-
-  <select id="getSystemList" resultType="java.util.Map" >
+    <!--获取所属系统-->
+    <select id="getSystemList" resultType="java.util.Map">
     select system_no systemNo,system_name systemName from account_system where del_flag = 0
   </select>
+
+
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from account_system
+        where del_flag =0
+    </select>
 </mapper>

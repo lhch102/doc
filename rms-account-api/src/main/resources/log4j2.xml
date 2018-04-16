@@ -6,7 +6,7 @@
         <!-- 日志根路径 -->
         <property name="LOG_HOME">/data/log</property>
         <!-- 项目名称 -->
-        <property name="PROJECT_NAME">rms-product</property>
+        <property name="PROJECT_NAME">rms-account-api</property>
         <!-- INFO级别日志名称 -->
         <property name="LOG_INFO_NAME">info.log</property>
         <!-- INFO级别备份日志名称 -->
@@ -79,6 +79,7 @@
             <appender-ref ref="databaseAppender"/>
         </logger>
  -->
+
         <root level="info">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>

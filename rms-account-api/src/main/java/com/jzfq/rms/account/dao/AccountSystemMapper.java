@@ -20,7 +20,15 @@ public interface AccountSystemMapper {
 
     int updateByPrimaryKey(AccountSystem record);
 
-    List<Map<String,String>> getSystemList();
+    /**
+     * 获取所属系统
+     *
+     * @return
+     */
+    List<Map<String, String>> getSystemList();
 
     String getMaxSystemNo();
+
+
+    public List<AccountSystem> selectAll();
 }
