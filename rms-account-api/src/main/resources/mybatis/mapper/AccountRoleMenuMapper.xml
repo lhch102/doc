@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.account.dao.AccountRoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountRoleMenuKey">
+        <id column="role_no" property="roleNo" jdbcType="VARCHAR"/>
+        <id column="menu_no" property="menuNo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountRoleMenuKey">
+        delete from account_role_menu
+        <where>
+            <if test="roleNo!=null and roleNo!=''">
+                and role_no = #{roleNo,jdbcType=VARCHAR}
+            </if>
+            <if test="menuNo!=null and menuNo!=''">
+                and menu_no = #{menuNo,jdbcType=VARCHAR}
+            </if>
+
+            <if test="(roleNo!=null and roleNo!='') or (menuNo!=null and menuNo!='')">
+                and 1=2
+            </if>
+
+        </where>
+    </delete>
+    <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountRoleMenuKey">
+    insert into account_role_menu (role_no, menu_no)
+    values (#{roleNo,jdbcType=VARCHAR}, #{menuNo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountRoleMenuKey">
+        insert into account_role_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleNo != null">
+                role_no,
+            </if>
+            <if test="menuNo != null">
+                menu_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleNo != null">
+                #{roleNo,jdbcType=VARCHAR},
+            </if>
+            <if test="menuNo != null">
+                #{menuNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

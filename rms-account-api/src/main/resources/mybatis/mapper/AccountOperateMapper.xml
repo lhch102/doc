@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.account.dao.AccountOperateMapper">
+    <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountOperate">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="operate_value" property="operateValue" jdbcType="VARCHAR"/>
+        <result column="operate_key" property="operateKey" jdbcType="VARCHAR"/>
+        <result column="operate_remark" property="operateRemark" jdbcType="VARCHAR"/>
+        <result column="operate_type" property="operateType" jdbcType="VARCHAR"/>
+        <result column="enable" property="enable" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, operate_value, operate_key, operate_remark, operate_type,enable
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from account_operate
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from account_operate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountOperate" useGeneratedKeys="true"
+            keyProperty="id">
+    insert into account_operate (operate_value, operate_key,operate_remark, operate_type,enable)
+    values (#{operateValue,jdbcType=VARCHAR}, #{operateKey,jdbcType=VARCHAR}
+    ,#{operateRemark,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{enable,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountOperate">
+        insert into account_operate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="operateValue != null">
+                operate_value,
+            </if>
+            <if test="operateKey != null">
+                operate_key,
+            </if>
+            <if test="operateRemark != null">
+                operate_remark,
+            </if>
+            <if test="operateType != null">
+                operate_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="operateValue != null">
+                #{operateValue,jdbcType=VARCHAR},
+            </if>
+            <if test="operateKey != null">
+                #{operateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="operateRemark != null">
+                #{operateRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="operateType != null">
+                #{operateType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.account.bean.AccountOperate">
+        update account_operate
+        <set>
+            <if test="operateValue != null">
+                operate_value = #{operateValue,jdbcType=VARCHAR},
+            </if>
+            <if test="operateKey != null">
+                operate_key = #{operateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="operateRemark != null">
+                operate_remark = #{operateRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="operateType != null">
+                operate_type = #{operateType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountOperate">
+    update account_operate
+    set operate_value = #{operateValue,jdbcType=VARCHAR},
+      operate_key = #{operateKey,jdbcType=VARCHAR},
+      operate_remark = #{operateRemark,jdbcType=VARCHAR},
+      operate_type = #{operateType,jdbcType=VARCHAR},
+      enable= #{enable,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <insert id="insertOperate" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.jzfq.rms.account.bean.AccountOperate">
+    insert into account_operate (id, operate_value, operate_key,
+      operate_remark, operate_type,enable)
+    values (#{id,jdbcType=BIGINT}, #{operateValue,jdbcType=VARCHAR}, #{operateKey,jdbcType=VARCHAR},
+      #{operateRemark,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{enable,jdbcType=VARCHAR})
+  </insert>
+
+
+    <select id="findOperaters" parameterType="com.jzfq.rms.account.common.PageParam" resultMap="BaseResultMap">
+
+        SELECT
+        mo.id,
+        operate_value,
+        operate_key,
+        operate_remark,
+        operate_type,
+        ENABLE
+        FROM
+        account_operate mo
+        LEFT JOIN account_menu_operate ao ON mo.id = ao.id
+
+        <if test="p!=null">
+            <where>
+                <if test="p.menuNo != null and p.menuNo != ''">
+                    and ao.menu_no like '%${p.menuNo}%'
+                </if>
+            </where>
+        </if>
+    </select>
+
+
+    <update id="updateEnable" parameterType="java.lang.String">
+        UPDATE account_operate dic set dic.enable = #{enable,jdbcType=VARCHAR}
+        <if test="list != null and list.size() > 0">
+            WHERE dic.id in
+            <foreach item="item" index="index" collection="list" open="("
+                     separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+    <select id="selectByMenuNo" parameterType="hashmap" resultMap="BaseResultMap">
+        SELECT
+        oper.id,
+        oper.operate_value,
+        oper.operate_key,
+        oper.operate_remark,
+        oper.operate_type,
+        oper.`enable`
+        FROM
+        account_menu AS menu
+        INNER JOIN account_menu_operate AS amo ON amo.menu_no = menu.menu_no
+        INNER JOIN account_operate AS oper ON oper.id = amo.id
+        <where>
+            <if test="menuNo!=null and menuNo!=''">
+                and menu.menu_no=#{menuNo}
+            </if>
+            <if test="enable!=null and enable!=''">
+                and oper.enable=#{enable}
+            </if>
+            <if test="operateType!=null and operateType!=''">
+                and oper.operate_type=#{operateType}
+            </if>
+            <if test="operateValue!=null and operateValue!=''">
+                and oper.operate_value=#{operateValue}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateOperRelation" parameterType="hashmap">
+        UPDATE account_operate
+        SET enable=#{enable}
+        <where>
+            <if test="operIds!=null">
+                and id in
+                <foreach collection="operIds" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </update>
+
+    <!--selectByType-->
+    <select id="selectByType" parameterType="hashmap" resultMap="BaseResultMap">
+        SELECT
+        oper.id,
+        oper.operate_value,
+        oper.operate_key,
+        oper.operate_remark,
+        oper.operate_type,
+        oper.`enable`
+        FROM account_operate AS oper
+        <where>
+            <if test="enable!=null and enable!=''">
+                and oper.enable=#{enable}
+            </if>
+            <if test="operateType!=null and operateType!=''">
+                and oper.operate_type=#{operateType}
+            </if>
+            <if test="operateValue!=null and operateValue!=''">
+                and oper.operate_value=#{operateValue}
+            </if>
+        </where>
+    </select>
+</mapper>

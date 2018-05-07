@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.account.dao.AccountMenuMapper">
+    <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountMenu">
+        <id column="menu_no" property="menuNo" jdbcType="VARCHAR"/>
+        <result column="parent_no" property="parentNo" jdbcType="VARCHAR"/>
+        <result column="parent_nos" property="parentNos" jdbcType="VARCHAR"/>
+        <result column="name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="DECIMAL"/>
+        <result column="href" property="href" jdbcType="VARCHAR"/>
+        <result column="target" property="target" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="is_show" property="isShow" jdbcType="CHAR"/>
+        <result column="permission" property="permission" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="system_no" property="systemNo" jdbcType="VARCHAR"/>
+        <result column="role_no" property="roleNo" jdbcType="VARCHAR"/>
+        <result column="allot" property="allot" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+
+    <resultMap id="resultMap" type="com.jzfq.rms.account.bean.AccountMenu" extends="BaseResultMap">
+        <result column="system_name" property="systemName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    menu_no, parent_no, parent_nos, name, sort, href, target, icon, is_show, permission, 
+    create_by, create_date, update_by, update_date, remarks, del_flag, system_no
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from account_menu
+        where menu_no = #{menuNo,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account_menu
+    where menu_no = #{menuNo,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+    insert into account_menu (menu_no, parent_no, parent_nos, 
+      name, sort, href, target, 
+      icon, is_show, permission, 
+      create_by, create_date, update_by, 
+      update_date, remarks, del_flag, 
+      system_no)
+    values (#{menuNo,jdbcType=VARCHAR}, #{parentNo,jdbcType=VARCHAR}, #{parentNos,jdbcType=VARCHAR}, 
+      #{menuName,jdbcType=VARCHAR}, #{sort,jdbcType=DECIMAL}, #{href,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR},
+      #{icon,jdbcType=VARCHAR}, #{isShow,jdbcType=CHAR}, #{permission,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, 
+      #{systemNo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+        insert into account_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuNo != null">
+                menu_no,
+            </if>
+            <if test="parentNo != null">
+                parent_no,
+            </if>
+            <if test="parentNos != null">
+                parent_nos,
+            </if>
+            <if test="menuName != null">
+                name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="href != null">
+                href,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="permission != null">
+                permission,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="systemNo != null">
+                system_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuNo != null">
+                #{menuNo,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNo != null">
+                #{parentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNos != null">
+                #{parentNos,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=DECIMAL},
+            </if>
+            <if test="href != null">
+                #{href,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=CHAR},
+            </if>
+            <if test="permission != null">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="systemNo != null">
+                #{systemNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+        update account_menu
+        <set>
+            <if test="parentNo != null">
+                parent_no = #{parentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNos != null">
+                parent_nos = #{parentNos,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=DECIMAL},
+            </if>
+            <if test="href != null">
+                href = #{href,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=CHAR},
+            </if>
+            <if test="permission != null">
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="systemNo != null">
+                system_no = #{systemNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where menu_no = #{menuNo,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+    update account_menu
+    set parent_no = #{parentNo,jdbcType=VARCHAR},
+      parent_nos = #{parentNos,jdbcType=VARCHAR},
+      name = #{menuName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=DECIMAL},
+      href = #{href,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=CHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      system_no = #{systemNo,jdbcType=VARCHAR}
+    where menu_no = #{menuNo,jdbcType=VARCHAR}
+  </update>
+
+    <!--获取最大菜单编号-->
+    <select id="getMaxMenuNo" resultType="string">
+    select max(menu_no) from account_menu where del_flag = 0
+  </select>
+    <!--根据系统编号查询菜单-->
+    <select id="getMenuListBySystemNo" resultMap="resultMap" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+    select menu_no,parent_no,name,s.system_name from account_menu m left join account_system s
+      on m.system_no = s.system_no
+    where del_flag = 0 and system_no = #{systemNo};
+  </select>
+
+    <select id="queryMenuList" resultMap="BaseResultMap" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        account_menu AS accmenu
+        where accmenu.del_flag = 0
+
+        <if test="menuName != null and menuName != ''">
+            and accmenu.name like '%${menuName}%'
+        </if>
+        <if test="systemNo != null and systemNo != ''">
+            and accmenu.system_no = '${systemNo}'
+        </if>
+        <if test="delFlag != null and delFlag != ''">
+            and accmenu.del_flag = '${delFlag}'
+        </if>
+
+    </select>
+
+    <update id="showOrVisable" parameterType="java.lang.String">
+        UPDATE account_menu de set de.is_show = #{type,jdbcType=VARCHAR}
+        <if test="list != null and list.size() > 0">
+            WHERE de.menu_no in
+            <foreach item="item" index="index" collection="list" open="("
+                     separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+    <select id="checkMenu" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(dic.menu_no) from account_menu dic
+        <if test="menuName != null and menuName != ''">
+            where name = #{menuName,jdbcType=VARCHAR}
+            <if test="menuNo != null and menuNo != ''">
+                and dic.name not in (
+                select IFNULL(name,'') from account_menu c where c.menu_no = #{menuNo,jdbcType=VARCHAR}
+                )
+            </if>
+        </if>
+        <if test="href != null and href != ''">
+            where href = #{href,jdbcType=VARCHAR}
+            <if test="menuNo != null and menuNo != ''">
+                and dic.href not in (
+                select IFNULL(href,'') from account_menu c where c.menu_no = #{menuNo,jdbcType=VARCHAR}
+                )
+            </if>
+        </if>
+        <if test="permission != null and permission != ''">
+            where permission = #{permission,jdbcType=VARCHAR}
+            <if test="menuNo != null and menuNo != ''">
+                and dic.permission not in (
+                select IFNULL(permission,'') from account_menu c where c.menu_no = #{menuNo,jdbcType=VARCHAR}
+                )
+            </if>
+        </if>
+    </select>
+
+
+    <select id="queryRoleMenuList" resultMap="BaseResultMap" parameterType="com.jzfq.rms.account.bean.AccountMenu">
+        SELECT
+        accmenu.`menu_no`,
+        accmenu.`parent_no`,
+        accmenu.`parent_nos`,
+        accmenu.`name`,
+        accmenu.`sort`,
+        accmenu.`href`,
+        accmenu.`target`,
+        accmenu.`icon`,
+        accmenu.`is_show` 、,
+        accmenu.`permission`,
+        accmenu.`create_by`,
+        accmenu.`create_date`,
+        accmenu.`update_by`,
+        accmenu.`update_date`,
+        accmenu.`remarks`,
+        accmenu.`del_flag`,
+        accmenu.`system_no`,
+        (
+        SELECT
+        (
+        CASE
+        WHEN rolemenu.role_no IS NULL THEN
+        '0'
+        ELSE
+        '1'
+        END
+        )
+        FROM
+        account_role_menu AS rolemenu
+        WHERE
+        rolemenu.menu_no = accmenu.menu_no AND rolemenu.role_no=#{roleNo}
+        ) AS 'allot',
+        (
+        SELECT
+        rolemenu.role_no
+        FROM
+        account_role_menu AS rolemenu
+        WHERE
+        rolemenu.menu_no = accmenu.menu_no AND rolemenu.role_no=#{roleNo}
+        )AS 'role_no'
+        FROM
+        account_menu AS accmenu
+        where accmenu.del_flag = 0
+
+        <if test="menuName != null and menuName != ''">
+            and accmenu.name like '%${menuName}%'
+        </if>
+        <if test="systemNo != null and systemNo != ''">
+            and accmenu.system_no = '${systemNo}'
+        </if>
+        <if test="delFlag != null and delFlag != ''">
+            and accmenu.del_flag = '${delFlag}'
+        </if>
+
+    </select>
+
+</mapper>

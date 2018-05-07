@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 设置log4j2的自身log级别为warn -->
+<!-- OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<configuration status="INFO" monitorInterval="30">
+    <properties>
+        <!-- 日志根路径 -->
+        <property name="LOG_HOME">/data/log</property>
+        <!-- 项目名称 -->
+        <property name="PROJECT_NAME">rms-account-api</property>
+        <!-- INFO级别日志名称 -->
+        <property name="LOG_INFO_NAME">info.log</property>
+        <!-- INFO级别备份日志名称 -->
+        <property name="BACKUP_INFO_NAME">info-%d{yyyy-MM-dd-HH}-%i.log.gz</property>
+
+        <!-- ERROR级别日志名称 -->
+        <property name="LOG_ERROR_NAME">error.log</property>
+        <!-- ERROR级别备份日志名称-->
+        <property name="BACKUP_ERROR_NAME">error-%d{yyyy-MM-dd-HH}-%i.log.gz</property>
+    </properties>
+
+    <appenders>
+
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[${PROJECT_NAME}][%p][%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread]([%c:%line]) - %msg%n"/>
+        </console>
+
+        <RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-${LOG_INFO_NAME}"
+                     filePattern="${LOG_HOME}/${PROJECT_NAME}/$${date:yyyy-MM-dd}/${PROJECT_NAME}-${BACKUP_INFO_NAME}"
+                     bufferedIO="true"
+                     bufferSize="8192"
+                     immediateFlush="true"
+                     ignoreExceptions="false">
+            >
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[${PROJECT_NAME}]%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="RollingFileError" fileName="${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-${LOG_ERROR_NAME}"
+                     filePattern="${LOG_HOME}/${PROJECT_NAME}/$${date:yyyy-MM-dd}/${PROJECT_NAME}-${BACKUP_ERROR_NAME}">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[${PROJECT_NAME}]%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+        <!-- 
+        <JDBC name="databaseAppender" tableName="sys_log">
+            <ConnectionFactory class="com.jzfq.rms.account.utils.ConnectionFactory" method="getDatabaseConnection" />
+            <Column name="log_date" isEventTimestamp="true"/>
+            <Column name="log_file" pattern="%file" />
+            <Column name="log_line" pattern="%line" />
+            <Column name="log_thread" pattern="%thread" />
+            <Column name="log_level" pattern="%level" />
+            <Column name="log_message" pattern="%message"/>
+            <Column name="traceId" pattern="%X{traceId}"/>
+            <Column name="messageTypeID" pattern="%X{messageTypeID}"/>
+            <Column name="syori_flag" pattern="0"/>
+            <Column name="systemID" pattern="21"/>
+        </JDBC> -->
+    </appenders>
+
+    <loggers>
+
+        <logger name="org.springframework" level="error" />
+        <logger name="org.apache.http" level="warn" />
+        <logger name="org.apache.commons.httpclient" level="error" />
+        <logger name="org.apache.zookeeper" level="error" />
+<!-- 
+        <logger name="com.jzfq.rms.account" level="trace" >
+            <appender-ref ref="databaseAppender"/>
+        </logger>
+ -->
+
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileError"/>
+        </root>
+    </loggers>
+
+</configuration>

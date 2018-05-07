@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.account.dao.AccountDicTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.jzfq.rms.account.bean.AccountDicType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type_name, type, remark, update_by, update_date, enable_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_dic_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account_dic_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
+    insert into account_dic_type (id, type_name, type, 
+      remark, update_by, update_date,
+      enable_flag)
+    values (#{id,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{enableFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
+    insert into account_dic_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="upateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
+    update account_dic_type
+    <set >
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.account.bean.AccountDicType" >
+    update account_dic_type
+    set type_name = #{typeName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      enable_flag = #{enableFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="findDictions" parameterType="com.jzfq.rms.account.common.PageParam" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from account_dic_type dic
+
+    <if test="p!=null">
+      <where>
+        <if test="p.typeName != null and p.typeName != ''">
+          and dic.type_name like '%${p.typeName}%'
+        </if>
+        <if test="p.type != null and p.type != ''">
+          and dic.type = '${p.type}'
+        </if>
+        <if test="p.remark != null and p.remark != ''">
+          and dic.remark like '%${p.remark}%'
+
+        </if>
+      </where>
+    </if>
+  </select>
+
+
+
+
+  <select id="checkTypeName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(dic.id) from account_dic_type dic
+    where type_name = #{typeName,jdbcType=VARCHAR}
+    <if test="id != null and id != ''">
+      and dic.type_name not in (
+      select IFNULL(type_name,'') from account_dic_type c where c.id = #{id,jdbcType=VARCHAR}
+      )
+    </if>
+  </select>
+
+
+
+
+</mapper>
