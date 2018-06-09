@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.product.persistence.dao.LatitudeLongitudeDao" >
+  <resultMap id="BaseResultMap" type="com.jzfq.rms.product.bean.LatitudeLongitude" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tacticsKQ_ID" property="tacticskqId" jdbcType="VARCHAR" />
+    <result column="lat_min" property="latMin" jdbcType="DECIMAL" />
+    <result column="lat_max" property="latMax" jdbcType="DECIMAL" />
+    <result column="lng_min" property="lngMin" jdbcType="DECIMAL" />
+    <result column="lng_max" property="lngMax" jdbcType="DECIMAL" />
+    <result column="validity_period" property="validityPeriod" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="latRange" property="latRange" jdbcType="VARCHAR" />
+    <result column="lngRange" property="lngRange" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tacticsKQ_ID, concat_ws(' ~ ',lat_min,lat_max) latRange, concat_ws(' ~ ',lng_min,lng_max) lngRange, validity_period, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from latitude_longitude
+    <where>
+      <if test="tacticsKQId != null and tacticsKQId != ''" >
+        tacticsKQ_ID = #{tacticsKQId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.jzfq.rms.product.common.PageParam">
+      select
+      <include refid="Base_Column_List" />
+      from latitude_longitude
+      <where>
+        <if test="p.tacticskqId != null and p.tacticskqId != ''">
+          tacticskq_id = #{p.tacticskqId,jdbcType=VARCHAR}
+        </if>
+        <if test="p.startValidityPeriod != null and p.startValidityPeriod != ''">
+          and validity_period <![CDATA[ >= ]]> #{p.startValidityPeriod}
+        </if>
+        <if test="p.endValidityPeriod != null and p.endValidityPeriod != ''">
+          and validity_period <![CDATA[ <= ]]>= #{p.endValidityPeriod}
+        </if>
+        <if test="p.latAndlng != null and p.latAndlng != ''">
+          and
+          ((lat_min <![CDATA[ <= ]]> #{p.latAndlng,jdbcType=DECIMAL} and lat_max <![CDATA[ >= ]]> #{p.latAndlng,jdbcType=DECIMAL})
+          or (lng_min <![CDATA[ <= ]]> #{p.latAndlng,jdbcType=DECIMAL} and lng_max <![CDATA[ >= ]]> #{p.latAndlng,jdbcType=DECIMAL}))
+        </if>
+      </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from latitude_longitude
+      <where>
+        <foreach  collection="ids" item="id" open="(" close=")" separator="or">
+          `id` = #{id,jdbcType=INTEGER}
+        </foreach>
+      </where>
+  </delete>
+  <insert id="insert" parameterType="com.jzfq.rms.product.bean.LatitudeLongitude" >
+    insert into latitude_longitude (id, tacticsKQ_ID, lat_min, 
+      lat_max, lng_min, lng_max, 
+      `validity_period`, remark)
+    values (#{id,jdbcType=INTEGER}, #{tacticskqId,jdbcType=VARCHAR}, #{latMin,jdbcType=DECIMAL}, 
+      #{latMax,jdbcType=DECIMAL}, #{lngMin,jdbcType=DECIMAL}, #{lngMax,jdbcType=DECIMAL}, 
+      #{validityPeriod,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzfq.rms.product.bean.LatitudeLongitude" >
+    insert into latitude_longitude
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tacticskqId != null" >
+        tacticsKQ_ID,
+      </if>
+      <if test="latMin != null" >
+        lat_min,
+      </if>
+      <if test="latMax != null" >
+        lat_max,
+      </if>
+      <if test="lngMin != null" >
+        lng_min,
+      </if>
+      <if test="lngMax != null" >
+        lng_max,
+      </if>
+      <if test="validityPeriod != null" >
+        validity_period,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tacticskqId != null" >
+        #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="latMin != null" >
+        #{latMin,jdbcType=DECIMAL},
+      </if>
+      <if test="latMax != null" >
+        #{latMax,jdbcType=DECIMAL},
+      </if>
+      <if test="lngMin != null" >
+        #{lngMin,jdbcType=DECIMAL},
+      </if>
+      <if test="lngMax != null" >
+        #{lngMax,jdbcType=DECIMAL},
+      </if>
+      <if test="validityPeriod != null" >
+        #{validityPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.product.bean.LatitudeLongitude" >
+    update latitude_longitude
+    <set >
+      <if test="tacticskqId != null" >
+        tacticsKQ_ID = #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="latMin != null" >
+        lat_min = #{latMin,jdbcType=DECIMAL},
+      </if>
+      <if test="latMax != null" >
+        lat_max = #{latMax,jdbcType=DECIMAL},
+      </if>
+      <if test="lngMin != null" >
+        lng_min = #{lngMin,jdbcType=DECIMAL},
+      </if>
+      <if test="lngMax != null" >
+        lng_max = #{lngMax,jdbcType=DECIMAL},
+      </if>
+      <if test="validityPeriod != null" >
+        validity_period = #{validityPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+      <foreach  collection="ids" item="id" open="(" close=")" separator="or">
+        `id` = #{id,jdbcType=INTEGER}
+      </foreach>
+    </where>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.product.bean.LatitudeLongitude" >
+    update latitude_longitude
+    set tacticsKQ_ID = #{tacticskqId,jdbcType=VARCHAR},
+      lat_min = #{latMin,jdbcType=DECIMAL},
+      lat_max = #{latMax,jdbcType=DECIMAL},
+      lng_min = #{lngMin,jdbcType=DECIMAL},
+      lng_max = #{lngMax,jdbcType=DECIMAL},
+      validity_period = #{validityPeriod,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.product.persistence.dao.ConfigMobileDao">
+  <resultMap id="BaseResultMap" type="com.jzfq.rms.product.bean.ConfigMobile">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="tacticsKQ_ID" property="tacticskqId" jdbcType="VARCHAR"/>
+    <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+    <result column="validity_period" property="validityPeriod" jdbcType="TIMESTAMP"/>
+    <result column="remark" property="remark" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tacticsKQ_ID, mobile, validity_period, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from config_mobile
+    <where>
+      <if test="tacticsKQId != null and tacticsKQId != ''">
+        tacticsKQ_ID = #{tacticsKQId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <!--分页查询手机号列表-->
+  <select id="queryList" resultMap="BaseResultMap"
+          parameterType="com.jzfq.rms.product.common.PageParam">
+    select
+    <include refid="Base_Column_List"/>
+    from config_mobile
+    <where>
+      <if test="p.tacticskqId != null and p.tacticskqId != ''">
+        tacticskq_id = #{p.tacticskqId,jdbcType=VARCHAR}
+      </if>
+      <if test="p.mobile != null and p.mobile != ''">
+        and mobile = #{p.mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="p.startValidityPeriod != null and p.startValidityPeriod != ''">
+        and validity_period <![CDATA[ >= ]]>= #{p.startValidityPeriod}
+      </if>
+      <if test="p.endValidityPeriod != null and p.endValidityPeriod != ''">
+        and validity_period <![CDATA[ <= ]]>= #{p.endValidityPeriod}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="list">
+    delete from `config_mobile`
+    <where>
+      <foreach  collection="ids" item="id" open="(" close=")" separator="or">
+        `id` = #{id,jdbcType=INTEGER}
+      </foreach>
+    </where>
+  </delete>
+  <insert id="insert" parameterType="com.jzfq.rms.product.bean.ConfigMobile">
+    insert into `config_mobile` (`id`, `tacticskq_id`, `mobile`,
+                                 `validity_period`, `remark`)
+    values (#{id,jdbcType=INTEGER}, #{tacticskqId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+            #{validityPeriod,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzfq.rms.product.bean.ConfigMobile">
+    insert into config_mobile
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+
+      <if test="tacticskqId != null">
+        tacticsKQ_ID,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="validityPeriod != null">
+        validity_period,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="tacticskqId != null">
+        #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null">
+        #{validityPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.product.bean.ConfigMobile">
+    update config_mobile
+    <set>
+      <if test="tacticskqId != null">
+        tacticsKQ_ID = #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null">
+        validity_period = #{validityPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+      <foreach  collection="ids" item="id" open="(" close=")" separator="or">
+        `id` = #{id,jdbcType=INTEGER}
+      </foreach>
+    </where>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.product.bean.ConfigMobile">
+    update config_mobile
+    set tacticsKQ_ID  = #{tacticskqId,jdbcType=VARCHAR},
+      mobile          = #{mobile,jdbcType=VARCHAR},
+      validity_period = #{validityPeriod,jdbcType=TIMESTAMP},
+      remark          = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzfq.rms.product.persistence.dao.CustomerTypeDao">
+  <resultMap id="BaseResultMap" type="com.jzfq.rms.product.bean.CustomerType">
+    <id column="customer_type_id" property="customerTypeId" jdbcType="INTEGER"/>
+    <result column="tacticsKQ_ID" property="tacticskqId" jdbcType="VARCHAR"/>
+    <result column="customer_type" property="customerType" jdbcType="VARCHAR"/>
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR"/>
+    <result column="customer_status" property="customerStatus" jdbcType="CHAR"/>
+    <result column="customer_level" property="customerLevel" jdbcType="INTEGER"/>
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR"/>
+    <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+    <result column="statusName" property="statusName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    customer_type_id, tacticsKQ_ID, customer_type, channel_id, customer_status, customer_level,
+    delete_flag, remark, create_user, create_time, update_user, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+      ct.customer_type_id, ct.tacticsKQ_ID, ct.customer_type, ct.channel_id,d.rms_value channel_name,
+      ct.customer_status,d1.rms_value statusName, ct.customer_level,ct.delete_flag, ct.remark,
+      ct.create_user, ct.create_time, ct.update_user, ct.update_time
+    from customer_type ct
+      left join dictionary d on ct.channel_id = d.rms_key and d.type = 'jd_channel_name'
+      left join dictionary d1 on ct.customer_status = d1.rms_key and d.type = 'jd_business state'
+    where ct.delete_flag = 0 and ct.customer_type_id = #{customerTypeId,jdbcType=INTEGER}
+  </select>
+  <select id="tacticsKQID" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from customer_type
+    where delete_flag = 0
+    <if test="customerTypeId != null and customerTypeId != ''">
+      and customer_type_id = #{customerTypeId,jdbcType=INTEGER},
+    </if>
+    <if test="tacticskqId != null and tacticskqId != ''">
+      and tacticsKQ_ID = #{tacticskqId,jdbcType=VARCHAR}
+    </if>
+    <if test="channelId != null and channelId != ''">
+      and channel_id = #{channelId,jdbcType=VARCHAR}
+    </if>
+    order by ${orderBy}
+  </select>
+
+  <!--获取渠道种类-->
+  <select id="getChannelType" resultType="string">
+    select `channel_id` `channelid` from `customer_type`
+    group by `channel_id`
+  </select>
+  <!--分页查询客群信息-->
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.jzfq.rms.product.common.PageParam">
+    select ct.customer_type_id, ct.tacticsKQ_ID, d.rms_value channel_name,
+    ct.customer_type,ct.customer_level,ct.customer_status,d1.rms_value statusName, ct.remark,
+    ct.update_user, ct.update_time
+    from customer_type ct
+    left join dictionary d on ct.channel_id = d.rms_key and d.type = 'jd_channel_name'
+    left join dictionary d1 on ct.customer_status = d1.rms_key and d.type = 'jd_business state'
+    <where>
+      ct.delete_flag = 0
+      <if test="p.customerType != null and p.customerType != ''">
+        and locate(#{p.customerType,jdbcType=VARCHAR}, customer_type) > 0
+      </if>
+      <if test="p.channelId != null and p.channelId != ''">
+        and ct.channel_id = #{channelId,jdbcType=VARCHAR}
+      </if>
+      <if test="p.customerStatus != null and p.customerStatus != ''">
+        and ct.customer_status = #{customerStatus,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="checkTacticsKQName" resultType="java.lang.Integer" parameterType="map">
+    select count(1) from customer_type where customer_type = #{customerTypeName,jdbcType=VARCHAR}
+    <if test="tacticskqId != null">
+      and tacticskq_id != #{tacticskqId,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="getTacticsKQNo" resultType="java.lang.String">
+      select max(tacticskq_id) from customer_type
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `customer_type`
+    where `customer_type_id` = #{customerTypeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jzfq.rms.product.bean.CustomerType">
+    insert into customer_type (customer_type_id, tacticsKQ_ID, customer_type,
+                               channel_id, `customer_status`, customer_level, delete_flag, remark,
+                               create_user, create_time, update_user,
+                               update_time)
+    values (#{customerTypeId,jdbcType=INTEGER}, #{tacticskqId,jdbcType=VARCHAR}, #{customerType,jdbcType=INTEGER},
+                                                #{channelId,jdbcType=VARCHAR}, #{customerStatus,jdbcType=CHAR},
+                                                #{customerLevel,jdbcType=INTEGER},
+                                                #{deleteFlag,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},
+                                                #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                                                #{updateUser,jdbcType=VARCHAR},
+            #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jzfq.rms.product.bean.CustomerType" useGeneratedKeys="true" keyProperty="customerTypeId">
+    insert into customer_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+
+      <if test="tacticskqId != null">
+        tacticsKQ_ID,
+      </if>
+      <if test="customerType != null">
+        customer_type,
+      </if>
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="customerStatus != null">
+        customer_status,
+      </if>
+      <if test="customerLevel != null">
+        customer_level,
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="tacticskqId != null">
+        #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null">
+        #{customerType,jdbcType=INTEGER},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null">
+        #{customerStatus,jdbcType=CHAR},
+      </if>
+      <if test="customerLevel != null">
+        #{customerLevel,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jzfq.rms.product.bean.CustomerType">
+    update customer_type
+    <set>
+      <if test="tacticskqId != null">
+        tacticsKQ_ID = #{tacticskqId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null">
+        customer_type = #{customerType,jdbcType=INTEGER},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null">
+        customer_status = #{customerStatus,jdbcType=CHAR},
+      </if>
+      <if test="customerLevel != null">
+        customer_level = #{customerLevel,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_type_id = #{customerTypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jzfq.rms.product.bean.CustomerType">
+    update customer_type
+    set tacticsKQ_ID  = #{tacticskqId,jdbcType=VARCHAR},
+      customer_type   = #{customerType,jdbcType=INTEGER},
+      channel_id      = #{channelId,jdbcType=VARCHAR},
+      customer_status = #{customerStatus,jdbcType=CHAR},
+      customer_level  = #{customerLevel,jdbcType=INTEGER},
+      delete_flag     = #{deleteFlag,jdbcType=CHAR},
+      remark          = #{remark,jdbcType=VARCHAR},
+      create_user     = #{createUser,jdbcType=VARCHAR},
+      create_time     = #{createTime,jdbcType=TIMESTAMP},
+      update_user     = #{updateUser,jdbcType=VARCHAR},
+      update_time     = #{updateTime,jdbcType=TIMESTAMP}
+    where customer_type_id = #{customerTypeId,jdbcType=INTEGER}
+  </update>
+</mapper>
